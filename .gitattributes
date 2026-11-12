@@ -1,0 +1,7 @@
+# 所有文本统一以 LF 入库与检出，保持公开说明与规范跨平台一致。
+* text=auto eol=lf
+
+# 版本策略、签名与测试向量是精确的字节契约，禁止任何文本转换。
+version-policy*.json -text
+*.minisig -text
+docs/MPV1-测试向量/** binary

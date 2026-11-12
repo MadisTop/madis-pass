@@ -1,0 +1,30 @@
+# 公开产品仓：任何真实密文库、备份与凭据都不得入库。
+*.mpv1
+*.mpv1.bak
+*.kdbx
+*.key
+*.keyx
+*.csv
+
+# 例外：公开的固定格式回归向量（全部为假数据）必须入库。
+!/docs/MPV1-测试向量/*.mpv1
+
+# 本机状态、密钥与签名私钥
+state.json
+ui.json
+portable.json
+.env
+.env.*
+*.pem
+*.minisign.key
+*.minisig.key
+
+# 构建产物与日志（正式发布走官方 Release 附件，不进 Git）
+*.exe
+*.msi
+*.AppImage
+*.deb
+*.rpm
+*.dmg
+*.zip
+*.log

@@ -1,6 +1,6 @@
 # MPV1 密文格式规范（公开）
 
-> 状态：**规范 v1，设计冻结；尚无实现、尚无测试向量**。
+> 状态：**规范 v1，已实现并有公开测试向量**（实现版本 Madis Pass 0.1.0；向量见 `docs/MPV1-测试向量/`）。
 > 本文件是 Madis Pass 密文库格式的**唯一对外权威文本**，用于让第三方在不依赖本产品源码的情况下独立验证或读取密文库。
 > 本文件是规范文档，**不含实现源码**；Madis Pass 的程序源码为私有。格式若变更，本文件与格式版本同步更新。
 
@@ -51,8 +51,8 @@
 
 1. `magic`、`format_version=1`、`flags=0`、三个保留字段全零、`header_size=88` 精确匹配。
 2. `kdf_id=1` 且 `cipher_id=1`；未知值拒绝，**不得**降级到更弱算法。
-3. 文件实际长度严格等于 `88 + ciphertext_len`；`ciphertext_len` 至少为 16，且不得超过读取器设定的上限。
-4. KDF 参数在允许范围内（建议范围：`kdf_memory_kib` 19456–1048576、`kdf_iterations` 1–10、`kdf_parallelism` 1–16）；超出即拒绝，**不得**按头中数值分配内存，以防恶意文件造成资源耗尽。
+3. 文件实际长度严格等于 `88 + ciphertext_len`；`ciphertext_len` 至少为 16，且不得超过 67108864（64 MiB，含标签）。
+4. KDF 参数在允许范围内（本版本读取器固定为 `kdf_memory_kib` 19456–1048576、`kdf_iterations` 1–10、`kdf_parallelism` 1–16，且 `kdf_memory_kib >= 8 * kdf_parallelism`）；超出即拒绝，**不得**按头中数值分配内存，以防恶意文件造成资源耗尽。
 
 任一检查失败：拒绝解锁，不尝试修复、不重建库、不回退参数。
 
@@ -123,10 +123,25 @@
 | `url` | string | 可空，最长 2048 字符；读取器不得对其发起网络请求 |
 | `username` | string | 可空，最长 512 字符 |
 
-示例（仅示意结构，**不是真实数据**，也非测试向量）：
+嵌套对象（键同样按字典序，且 `deny_unknown_fields`）：
+
+| 对象 | 键 | 类型 | 约束 |
+| --- | --- | --- | --- |
+| `meta` | `created_by` / `kdf_hint` | string / string | 只用于展示，不参与密钥派生 |
+| `settings` | `clipboard_clear_seconds` | u32 | 0–120 |
+| `settings` | `generator` | object | 见下表 |
+| `settings` | `hotkey` | string | 非空，最多 64 字符 |
+| `settings` | `idle_lock_seconds` | u32 | 0–3600，0 表示关闭空闲锁定 |
+| `settings` | `reveal_timeout_seconds` | u32 | 1–60 |
+| `generator` | `digits` / `exclude_ambiguous` / `lower` / `symbols` / `upper` | bool | 至少一个字符集为 `true` |
+| `generator` | `length` | u32 | 8–128 |
+
+`entries[]` 元素的键顺序为：`created_at`、`custom_fields`、`favorite`、`id`、`notes`、`password`、`tags`、`title`、`updated_at`、`url`、`username`；`custom_fields[]` 元素键顺序为 `key`、`protected`、`value`。
+
+示例（**真实实现的空库载荷字节**，不含任何凭据；固定测试向量另见 `docs/MPV1-测试向量/`）：
 
 ~~~json
-{"created_at":"2026-11-12T09:00:00Z","entries":[],"format":"mpv1","meta":{},"revision":1,"schema":1,"settings":{},"updated_at":"2026-11-12T09:00:00Z","vault_id":"00000000-0000-4000-8000-000000000000"}
+{"created_at":"2026-11-12T09:00:00Z","entries":[],"format":"mpv1","meta":{"created_by":"Madis Pass 0.1.0","kdf_hint":"Argon2id 64 MiB / t=3 / p=4"},"revision":1,"schema":1,"settings":{"clipboard_clear_seconds":15,"generator":{"digits":true,"exclude_ambiguous":true,"length":20,"lower":true,"symbols":false,"upper":true},"hotkey":"Ctrl+Alt+P","idle_lock_seconds":300,"reveal_timeout_seconds":10},"updated_at":"2026-11-12T09:00:00Z","vault_id":"00000000-0000-4000-8000-000000000000"}
 ~~~
 
 ## 8. 完整性、备份与修订
@@ -144,7 +159,8 @@
 ## 10. 独立校验工具与测试向量
 
 - `madis-pass-probe` 是独立编译、独立分发的命令行工具，提供头解析、格式校验与标签验证，其解析代码与产品实现走不同路径，用于验证本规范不是实现代码的镜像描述。
-- **当前状态**：实现与固定测试向量尚未发布。首个实现提交时应同步公开一组不含真实凭据的固定测试向量（正确主密码、错误主密码、各类篡改样本），并以 probe 与实现双向互校。
+- **当前状态**：v1 实现与固定测试向量已发布在 `docs/MPV1-测试向量/`。向量全部为假数据，包含正确样本、正确与错误主密码、magic / flags / 版本 / KDF 参数 / 头长度 / 保留位 / 密文位的篡改样本，以及截断与追加样本；`manifest.json` 给出每个样本的期望结果。`madis-pass-probe self-test <dir>` 与源码仓 `tests/格式回归向量/` 为同一批字节，做双向互校。
+- 这些向量用于**格式回归**，不是加密实现的证明，也不构成安全审计。
 - 第三方实现若与本规范或测试向量不一致，应以本规范为准并报告差异，不得由产品实现反向修改规范来「对齐」。
 
 ## 11. 安全边界
