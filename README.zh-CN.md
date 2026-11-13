@@ -79,9 +79,9 @@
 
 ## Gitee 镜像仓库
 
-本公开产品仓已在 Gitee 建立镜像：[gitee.com/madis/madis-pass](https://gitee.com/madis/madis-pass)。Gitee 镜像与 GitHub 保持同步，发布与下载以两边官方页面为准，不使用第三方转载。
+本公开产品仓已在 Gitee 建立镜像：[gitee.com/madis/madis-pass](https://gitee.com/madis/madis-pass)。同步由本仓 GitHub Actions 工作流每日北京时间 03:07 快进推送完成；发布与下载以两边官方页面为准，不使用第三方转载。
 
-源码仓 `madis-pass-source` 与构建仓 `madis-pass-build` 永久私有，不在此产品仓公开；其 Gitee 镜像策略见各自仓库约束（源码仓每日定时从 GitHub 同步，构建仓不同步源码）。
+源码仓 `madis-pass-source` 与构建仓 `madis-pass-build` 永久私有，不在此产品仓公开；其 Gitee 镜像策略见各自仓库约束（源码仓由自身 Actions 工作流每日定时从 GitHub 同步，构建仓不同步源码）。
 
 ## 许可与归属
 

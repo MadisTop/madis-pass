@@ -79,9 +79,9 @@ A locally built Windows x64 portable ZIP is produced from the private source rep
 
 ## Gitee mirror
 
-This public product repository is also mirrored on Gitee: [gitee.com/madis/madis-pass](https://gitee.com/madis/madis-pass). The Gitee mirror stays in sync with GitHub; use only the official GitHub / Gitee release pages, never third-party mirrors.
+This public product repository is also mirrored on Gitee: [gitee.com/madis/madis-pass](https://gitee.com/madis/madis-pass). It is kept in sync with GitHub by this repository's own GitHub Actions workflow (daily, Beijing 03:07, fast-forward only); use only the official GitHub / Gitee release pages, never third-party mirrors.
 
-The source repository `madis-pass-source` and build repository `madis-pass-build` are permanently private and are not published here; their Gitee mirroring policy lives in their own repository constraints (source mirrors daily from GitHub; build does not mirror source).
+The source repository `madis-pass-source` and build repository `madis-pass-build` are permanently private and are not published here; their Gitee mirroring policy lives in their own repository constraints (source mirrors daily from GitHub via its own Actions workflow; build does not mirror source).
 
 ## Licensing and attribution
 
