@@ -1,6 +1,8 @@
 # Madis Pass
 
-> **状态：v1 已实现，四目标能力已落地；仅 Windows x64 便携包经本机验证。尚无官方 GitHub / Gitee Release，未经第三方安全审计。**
+[English](README.md) | 简体中文
+
+> **状态：v1 已实现，四目标能力已落地；仅 Windows x64 便携包经本机验证。首个官方发布为 v0.1.0（Windows x64 便携包，未签名），未经第三方安全审计。**
 > 本仓库只包含产品文档与公开分发契约，不含源码、私钥、工作流或内部调试产物。
 
 单机、个人自用的低资源占用桌面密码管理器。用一个主密码解锁一个本地密文库，通过托盘与全局快捷键快速查找并复制密码。**密文库全程离线**；自动更新是唯一独立的出站通道，且当前默认关闭。
@@ -71,11 +73,11 @@
 
 ## 四目标交付与下载入口
 
-目标矩阵为 Windows x64 / Linux x64 / macOS Intel / macOS ARM，共九种安装包格式（NSIS、MSI、AppImage、deb、rpm、dmg、app.tar.gz）。当前**只有 Windows x64 便携 ZIP 在本机生成并验证**，四目标原生安装包、构建仓 CI 与官方 Release 均为模板 / 未验收状态，详见 [四平台交付说明](docs/四平台交付说明.md)。
+目标矩阵为 Windows x64 / Linux x64 / macOS Intel / macOS ARM，共九种安装包格式（NSIS、MSI、AppImage、deb、rpm、dmg、app.tar.gz）。当前**只有 Windows x64 便携 ZIP 在本机生成并验证**，四目标原生安装包与构建仓 CI 仍为模板 / 未验收状态；首个官方发布（v0.1.0）即本 Windows x64 便携 ZIP，详见 [四平台交付说明](docs/四平台交付说明.md)。
 
-目前**没有官方 Release**。正式发布后请只使用本仓库的 GitHub / Gitee 官方发布页，不使用来源不明的转载包。`SHA256SUMS` 仅用于检测下载损坏，不是数字签名。
+首个官方发布为 **v0.1.0**——Windows x64 便携 ZIP（未签名，`not-verified`）。请只使用本仓库的 GitHub / Gitee 官方发布页，不使用来源不明的转载包。`SHA256SUMS`（在 ZIP 内）仅用于检测下载损坏，不是数字签名。
 
-私有源码仓的 `release/windows/构建便携包.ps1` 可在本机生成 Windows x64 便携 ZIP，内含主程序、本说明、许可文本、格式规范、独立校验工具与 `SHA256SUMS.txt`。本机便携包**未签名**（`not-verified`），也不是官方发布。
+私有源码仓的 `release/windows/构建便携包.ps1` 可在本机生成 Windows x64 便携 ZIP，内含主程序、中英文说明、许可文本、格式规范、独立校验工具与 `SHA256SUMS.txt`。该便携 ZIP 即 v0.1.0 官方发布资产，但**未签名**（`not-verified`）。
 
 ## Gitee 镜像仓库
 
@@ -85,6 +87,6 @@
 
 ## 许可与归属
 
-Madis Pass 二进制为专有免费软件，按 [LICENSE.txt](LICENSE.txt) 分发；源码不公开。使用 [Slint](https://slint.dev) 构建，采用 Royalty-Free License 2.0，**Made with Slint**（归属声明为该许可的条件）。第三方依赖许可证清单随首个正式发布提供；Slint 的许可不代表整个产品的授权。
+Madis Pass 二进制为专有免费软件，按 [LICENSE.txt](LICENSE.txt) 分发；源码不公开。使用 [Slint](https://slint.dev) 构建，采用 Royalty-Free License 2.0，**Made with Slint**（归属声明为该许可的条件）。第三方依赖许可证（RustCrypto 等，采用 MIT / Apache-2.0）随发布说明一并列出；Slint 的许可不代表整个产品的授权。
 
 设计参考了 `pass` / `pash`、`SpicyPass`、KeePass / KeePassXC、`ripasso` 与 RustCrypto 等项目；这些项目的审计与认证结论**不构成对本产品的任何声称**。

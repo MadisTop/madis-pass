@@ -1,6 +1,8 @@
 # Madis Pass
 
-> **Status: v1 implemented, four-target capability in place; only the Windows x64 portable build is verified locally. No official GitHub / Gitee Release yet; no third-party security audit.**
+English | [简体中文](README.zh-CN.md)
+
+> **Status: v1 implemented, four-target capability in place; only the Windows x64 portable build is verified locally. First official release: v0.1.0 (Windows x64 portable, unsigned). No third-party security audit.**
 > This repository contains product documentation and the public distribution contract only — no source code, private keys, workflows or internal artifacts.
 
 A small, single-user password manager for the desktop. One master password unlocks one local encrypted vault; a tray icon and a global hotkey let you find an entry and copy its password quickly. **The vault path is fully offline**; the updater is the only separate outbound channel, and it is currently disabled.
@@ -71,11 +73,11 @@ Portable mode uses `Data/` beside the executable — do not place it in a cloud-
 
 ## Four-target delivery and downloads
 
-The target matrix is Windows x64 / Linux x64 / macOS Intel / macOS ARM with nine package formats (NSIS, MSI, AppImage, deb, rpm, dmg, app.tar.gz). Currently **only the Windows x64 portable ZIP is built and verified locally**; native installers, build-repo CI and official releases are templates / unverified. See [Four-platform delivery notes (Chinese)](docs/四平台交付说明.md).
+The target matrix is Windows x64 / Linux x64 / macOS Intel / macOS ARM with nine package formats (NSIS, MSI, AppImage, deb, rpm, dmg, app.tar.gz). Currently **only the Windows x64 portable ZIP is built and verified locally**; native installers and build-repo CI are templates / unverified. The first official Release (v0.1.0) ships this Windows x64 portable ZIP. See [Four-platform delivery notes (Chinese)](docs/四平台交付说明.md).
 
-No official Release is published yet. When releases exist, use only the official GitHub / Gitee release pages of this repository; do not use third-party mirrors. `SHA256SUMS` detects download corruption only — it is not a signature.
+The first official Release is **v0.1.0** — a Windows x64 portable ZIP (unsigned, `not-verified`). Use only the official GitHub / Gitee release pages of this repository; do not use third-party mirrors. `SHA256SUMS` (inside the ZIP) detects download corruption only — it is not a signature.
 
-A locally built Windows x64 portable ZIP is produced from the private source repo's `release/windows/构建便携包.ps1`; it contains the executable, this README, the license text, the format specification, the probe tool and `SHA256SUMS.txt`. Local portable builds are **not signed** (`not-verified`) and are not an official release.
+A Windows x64 portable ZIP is produced from the private source repo's `release/windows/构建便携包.ps1`; it contains the executable, both README files, the license text, the format specification, the probe tool and `SHA256SUMS.txt`. This portable ZIP is also the official v0.1.0 release asset; it is **not signed** (`not-verified`).
 
 ## Gitee mirror
 
@@ -85,6 +87,6 @@ The source repository `madis-pass-source` and build repository `madis-pass-build
 
 ## Licensing and attribution
 
-Madis Pass binaries are proprietary freeware distributed under [LICENSE.txt](LICENSE.txt); the source code is not published. Built with [Slint](https://slint.dev) under the Royalty-Free License 2.0 — **Made with Slint**. Third-party dependency licenses are summarised with the first official release; Slint's license does not license the whole product.
+Madis Pass binaries are proprietary freeware distributed under [LICENSE.txt](LICENSE.txt); the source code is not published. Built with [Slint](https://slint.dev) under the Royalty-Free License 2.0 — **Made with Slint**. Third-party dependency licenses (RustCrypto, etc., under MIT / Apache-2.0) are summarised in the release notes; Slint's license does not license the whole product.
 
 Third-party projects that informed this design include `pass` / `pash`, `SpicyPass`, KeePass / KeePassXC, `ripasso` and the RustCrypto crates. Their audits and certifications are **not** claims about this product.
