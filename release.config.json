@@ -1,0 +1,138 @@
+{
+  "schemaVersion": 1,
+  "productName": "madis-pass",
+  "displayName": "Madis Pass",
+  "publisher": "Madis",
+  "identifier": "top.madis.pass",
+  "binary": "madis-pass",
+  "packagePrefix": "madis-pass",
+  "release": {
+    "state": "implemented-not-published",
+    "version": "0.1.0",
+    "latestPublished": false,
+    "endToEndVerified": false
+  },
+  "targets": [
+    {
+      "id": "windows-x64",
+      "os": "windows",
+      "arch": "x86_64",
+      "rustTarget": "x86_64-pc-windows-msvc",
+      "formats": [
+        "nsis",
+        "msi"
+      ],
+      "extensions": [
+        ".exe",
+        ".msi"
+      ],
+      "packaging": "not-verified",
+      "nativeSigning": "not-verified",
+      "notarization": "not-applicable",
+      "updater": "not-applicable"
+    },
+    {
+      "id": "linux-x64",
+      "os": "linux",
+      "arch": "x86_64",
+      "rustTarget": "x86_64-unknown-linux-gnu",
+      "formats": [
+        "appimage",
+        "deb",
+        "rpm"
+      ],
+      "extensions": [
+        ".AppImage",
+        ".deb",
+        ".rpm"
+      ],
+      "packaging": "not-verified",
+      "nativeSigning": "not-verified",
+      "notarization": "not-applicable",
+      "updater": "not-applicable"
+    },
+    {
+      "id": "macos-x64",
+      "os": "macos",
+      "arch": "x86_64",
+      "rustTarget": "x86_64-apple-darwin",
+      "formats": [
+        "dmg",
+        "app.tar.gz"
+      ],
+      "extensions": [
+        ".dmg",
+        ".app.tar.gz"
+      ],
+      "packaging": "not-verified",
+      "nativeSigning": "not-verified",
+      "notarization": "not-verified",
+      "updater": "not-applicable"
+    },
+    {
+      "id": "macos-arm64",
+      "os": "macos",
+      "arch": "aarch64",
+      "rustTarget": "aarch64-apple-darwin",
+      "formats": [
+        "dmg",
+        "app.tar.gz"
+      ],
+      "extensions": [
+        ".dmg",
+        ".app.tar.gz"
+      ],
+      "packaging": "not-verified",
+      "nativeSigning": "not-verified",
+      "notarization": "not-verified",
+      "updater": "not-applicable"
+    }
+  ],
+  "installation": {
+    "windowsScope": "current-user",
+    "windowsDirectory": "%LOCALAPPDATA%\\Programs\\Madis\\Pass",
+    "uninstallPreserveUserData": true,
+    "dataDirectories": {
+      "windows": "%LOCALAPPDATA%\\Madis\\Pass\\Data",
+      "macos": "~/Library/Application Support/Madis/Pass/Data",
+      "linux": "$XDG_DATA_HOME/Madis/Pass/Data",
+      "linuxFallback": "~/.local/share/Madis/Pass/Data"
+    },
+    "state": "not-verified"
+  },
+  "updates": {
+    "state": "client-implemented-trust-root-not-configured",
+    "signatureAlgorithm": "minisign",
+    "trustedPublicKey": "",
+    "signedBinding": [
+      "identifier",
+      "version",
+      "target",
+      "os",
+      "arch",
+      "format",
+      "name",
+      "size",
+      "sha256",
+      "url",
+      "signature"
+    ],
+    "publicationOrder": [
+      "packages",
+      "signatures-and-bound-metadata",
+      "readback-verification",
+      "latest"
+    ],
+    "requireExitBeforeInstall": true,
+    "rejectUntrustedDowngrade": true,
+    "enabled": false,
+    "automaticInstall": false,
+    "metadataEndpoint": "https://raw.githubusercontent.com/MadisTop/madis-pass/main/update-metadata.json",
+    "metadataSchemaVersion": 2
+  },
+  "versionPolicy": {
+    "enabled": false,
+    "schemaVersion": 2,
+    "offlineGraceDays": 14
+  }
+}
