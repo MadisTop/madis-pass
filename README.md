@@ -77,6 +77,12 @@ No official Release is published yet. When releases exist, use only the official
 
 A locally built Windows x64 portable ZIP is produced from the private source repo's `release/windows/构建便携包.ps1`; it contains the executable, this README, the license text, the format specification, the probe tool and `SHA256SUMS.txt`. Local portable builds are **not signed** (`not-verified`) and are not an official release.
 
+## Gitee mirror
+
+This public product repository is also mirrored on Gitee: [gitee.com/madis/madis-pass](https://gitee.com/madis/madis-pass). The Gitee mirror stays in sync with GitHub; use only the official GitHub / Gitee release pages, never third-party mirrors.
+
+The source repository `madis-pass-source` and build repository `madis-pass-build` are permanently private and are not published here; their Gitee mirroring policy lives in their own repository constraints (source mirrors daily from GitHub; build does not mirror source).
+
 ## Licensing and attribution
 
 Madis Pass binaries are proprietary freeware distributed under [LICENSE.txt](LICENSE.txt); the source code is not published. Built with [Slint](https://slint.dev) under the Royalty-Free License 2.0 — **Made with Slint**. Third-party dependency licenses are summarised with the first official release; Slint's license does not license the whole product.

@@ -77,6 +77,12 @@
 
 私有源码仓的 `release/windows/构建便携包.ps1` 可在本机生成 Windows x64 便携 ZIP，内含主程序、本说明、许可文本、格式规范、独立校验工具与 `SHA256SUMS.txt`。本机便携包**未签名**（`not-verified`），也不是官方发布。
 
+## Gitee 镜像仓库
+
+本公开产品仓已在 Gitee 建立镜像：[gitee.com/madis/madis-pass](https://gitee.com/madis/madis-pass)。Gitee 镜像与 GitHub 保持同步，发布与下载以两边官方页面为准，不使用第三方转载。
+
+源码仓 `madis-pass-source` 与构建仓 `madis-pass-build` 永久私有，不在此产品仓公开；其 Gitee 镜像策略见各自仓库约束（源码仓每日定时从 GitHub 同步，构建仓不同步源码）。
+
 ## 许可与归属
 
 Madis Pass 二进制为专有免费软件，按 [LICENSE.txt](LICENSE.txt) 分发；源码不公开。使用 [Slint](https://slint.dev) 构建，采用 Royalty-Free License 2.0，**Made with Slint**（归属声明为该许可的条件）。第三方依赖许可证清单随首个正式发布提供；Slint 的许可不代表整个产品的授权。
