@@ -2,5 +2,105 @@
   "schemaVersion": 2,
   "identifier": "top.madis.pass",
   "version": "0.1.1",
-  "packages": []
+  "packages": [
+    {
+      "target": "windows-x64",
+      "os": "windows",
+      "arch": "x86_64",
+      "format": "nsis",
+      "name": "madis-pass_0.1.1_windows-x64-setup.exe",
+      "size": 4649536,
+      "sha256": "b2a45f7f885733f9675609dc2990d6165fb72b0cca92bb55adaefb768bb88cb5",
+      "url": "https://github.com/MadisTop/madis-pass/releases/latest/download/madis-pass_0.1.1_windows-x64-setup.exe",
+      "signature": "https://github.com/MadisTop/madis-pass/releases/latest/download/madis-pass_0.1.1_windows-x64-setup.exe.minisig"
+    },
+    {
+      "target": "windows-x64",
+      "os": "windows",
+      "arch": "x86_64",
+      "format": "msi",
+      "name": "madis-pass_0.1.1_windows-x64.msi",
+      "size": 5885952,
+      "sha256": "681de34512e268ec4c4f4147b588cf59db442823da2ec45b8925fa9a6a0ec57d",
+      "url": "https://github.com/MadisTop/madis-pass/releases/latest/download/madis-pass_0.1.1_windows-x64.msi",
+      "signature": "https://github.com/MadisTop/madis-pass/releases/latest/download/madis-pass_0.1.1_windows-x64.msi.minisig"
+    },
+    {
+      "target": "linux-x64",
+      "os": "linux",
+      "arch": "x86_64",
+      "format": "appimage",
+      "name": "madis-pass_0.1.1_linux-x64.AppImage",
+      "size": 8952312,
+      "sha256": "9c87b8ffaba4655bfdad42be2fc074af6549003d41e5d307c205dd1831e5f308",
+      "url": "https://github.com/MadisTop/madis-pass/releases/latest/download/madis-pass_0.1.1_linux-x64.AppImage",
+      "signature": "https://github.com/MadisTop/madis-pass/releases/latest/download/madis-pass_0.1.1_linux-x64.AppImage.minisig"
+    },
+    {
+      "target": "linux-x64",
+      "os": "linux",
+      "arch": "x86_64",
+      "format": "deb",
+      "name": "madis-pass_0.1.1_linux-x64.deb",
+      "size": 6222858,
+      "sha256": "70d0051f5d1e9cfb7306175cf68607532e506ea83375bdf154395b3e8dcfdd5f",
+      "url": "https://github.com/MadisTop/madis-pass/releases/latest/download/madis-pass_0.1.1_linux-x64.deb",
+      "signature": "https://github.com/MadisTop/madis-pass/releases/latest/download/madis-pass_0.1.1_linux-x64.deb.minisig"
+    },
+    {
+      "target": "linux-x64",
+      "os": "linux",
+      "arch": "x86_64",
+      "format": "rpm",
+      "name": "madis-pass_0.1.1_linux-x64.rpm",
+      "size": 7612586,
+      "sha256": "07f3276018110ad9494bc3b7ed7d25499275f5f5327cb32bf50bfba64ea6059c",
+      "url": "https://github.com/MadisTop/madis-pass/releases/latest/download/madis-pass_0.1.1_linux-x64.rpm",
+      "signature": "https://github.com/MadisTop/madis-pass/releases/latest/download/madis-pass_0.1.1_linux-x64.rpm.minisig"
+    },
+    {
+      "target": "macos-x64",
+      "os": "macos",
+      "arch": "x86_64",
+      "format": "dmg",
+      "name": "madis-pass_0.1.1_macos-x64.dmg",
+      "size": 6832468,
+      "sha256": "7e7095f6331caf059fe50c8c69683cab84e9f7d3b89405aa2b22352dec436b68",
+      "url": "https://github.com/MadisTop/madis-pass/releases/latest/download/madis-pass_0.1.1_macos-x64.dmg",
+      "signature": "https://github.com/MadisTop/madis-pass/releases/latest/download/madis-pass_0.1.1_macos-x64.dmg.minisig"
+    },
+    {
+      "target": "macos-x64",
+      "os": "macos",
+      "arch": "x86_64",
+      "format": "app.tar.gz",
+      "name": "madis-pass_0.1.1_macos-x64.app.tar.gz",
+      "size": 6412269,
+      "sha256": "64f3cb5cfd86fc24457d9131afcb2eaebd3e04826cc0d784a4be47c8ae30461d",
+      "url": "https://github.com/MadisTop/madis-pass/releases/latest/download/madis-pass_0.1.1_macos-x64.app.tar.gz",
+      "signature": "https://github.com/MadisTop/madis-pass/releases/latest/download/madis-pass_0.1.1_macos-x64.app.tar.gz.minisig"
+    },
+    {
+      "target": "macos-arm64",
+      "os": "macos",
+      "arch": "aarch64",
+      "format": "dmg",
+      "name": "madis-pass_0.1.1_macos-arm64.dmg",
+      "size": 6372090,
+      "sha256": "5a923fed47b0d18c610b63cb9b2dfbac5a5657d5815d3d0694328d456ec23683",
+      "url": "https://github.com/MadisTop/madis-pass/releases/latest/download/madis-pass_0.1.1_macos-arm64.dmg",
+      "signature": "https://github.com/MadisTop/madis-pass/releases/latest/download/madis-pass_0.1.1_macos-arm64.dmg.minisig"
+    },
+    {
+      "target": "macos-arm64",
+      "os": "macos",
+      "arch": "aarch64",
+      "format": "app.tar.gz",
+      "name": "madis-pass_0.1.1_macos-arm64.app.tar.gz",
+      "size": 6045241,
+      "sha256": "08cbfc4064d13ac12e88e6cc2b8cb6fc231b27dd8726061b0bf57da81647326b",
+      "url": "https://github.com/MadisTop/madis-pass/releases/latest/download/madis-pass_0.1.1_macos-arm64.app.tar.gz",
+      "signature": "https://github.com/MadisTop/madis-pass/releases/latest/download/madis-pass_0.1.1_macos-arm64.app.tar.gz.minisig"
+    }
+  ]
 }
