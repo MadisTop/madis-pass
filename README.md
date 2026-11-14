@@ -2,91 +2,72 @@
 
 English | [简体中文](README.zh-CN.md)
 
-> **Status: v1 implemented, four-target capability in place; only the Windows x64 portable build is verified locally. First official release: v0.1.0 (Windows x64 portable, unsigned). No third-party security audit.**
-> This repository contains product documentation and the public distribution contract only — no source code, private keys, workflows or internal artifacts.
-
-A small, single-user password manager for the desktop. One master password unlocks one local encrypted vault; a tray icon and a global hotkey let you find an entry and copy its password quickly. **The vault path is fully offline**; the updater is the only separate outbound channel, and it is currently disabled.
+Madis Pass: a lightweight offline password manager built with Rust and Slint. It encrypts a single-file local vault with Argon2id and XChaCha20-Poly1305 (MPV1), and supports idle auto-lock and multi-platform desktop clients.
 
 Publisher **Madis** · identifier **`top.madis.pass`** · binary **`madis-pass`** · version **0.1.0**.
 
-## What is implemented
+## Supported platforms
 
-- Create / unlock / lock a vault; change the master password.
-- Entry CRUD, favourites, tags, notes, custom fields and local search.
-- CSPRNG password generator; clipboard copy with auto-clear.
-- Encrypted backup / restore; atomic writes with a rotated `.mpv1.bak`.
-- Idle lock, session lock (two consecutive confirmations), manual lock, lock on exit.
-- Tray, quick-search window, `Ctrl+Alt+P` / `Ctrl+Alt+L` global hotkeys (Windows).
-- Portable mode and `--data-file` for a standalone vault file.
-- **Three-state dark mode**: follow system / light / dark, applied immediately and persisted.
-- **Three-state Chinese / English**: follow system / Simplified Chinese / English. Static UI strings and runtime notices switch together, in both the main window and the quick-search window.
-- **Signed in-app updater**: fixed HTTPS endpoint, Minisign verification, downgrade rejection, size + SHA-256 checks, background check, download then install-and-restart on exit; portable mode only notifies. See [Update and version policy (Chinese)](docs/更新与版本策略.md).
-- **Four-target native support**: per-OS detection of system theme, system language, idle time and sign-in startup. See [Four-platform delivery notes (Chinese)](docs/四平台交付说明.md).
+| Platform | Package formats |
+| --- | --- |
+| Windows x64 | NSIS `.exe`, MSI `.msi` |
+| Linux x64 | `.AppImage`, `.deb`, `.rpm` |
+| macOS Intel | `.dmg`, `.app.tar.gz` |
+| macOS Apple Silicon | `.dmg`, `.app.tar.gz` |
 
-Explicitly **not** in v1: cloud sync, accounts, browser extensions, system-wide autofill, TOTP / passkeys, attachments, entry history, team sharing, telemetry, KDBX writing, mobile apps.
+Linux graphical sessions use X11 or XWayland. Pick the package matching your OS and CPU architecture; the formats available at each download entry are listed in the assets of the corresponding release. Packages are named `madis-pass_<version>_<target><suffix>`; the internal executable is always `madis-pass`, and renaming a package never changes the program directory or data location.
 
-### Is automatic updating live?
+## Downloads
 
-The client code for checking, verifying, downloading and handing off installation **is implemented and tested**, but the **service is not enabled**: there is no dedicated Minisign trust root, no signed update packages and no deployed update gateway. The compile-time public key is empty, `enabled()` returns `false`, the app makes **no network requests** on startup, and the UI clearly states that automatic updates are not enabled.
+- [GitHub releases](https://github.com/MadisTop/madis-pass/releases)
+- [Gitee releases](https://gitee.com/madis/madis-pass/releases)
 
-This is neither a network failure nor "no update available". It becomes live only after the trust root, offline signing process, endpoint deployment and a real-device upgrade loop are all in place. This repository contains **no** private keys, `.minisig` files, or fabricated public keys / package hashes. In `release.config.json`, `updates.state` is `client-implemented-trust-root-not-configured`, and both `enabled` and `automaticInstall` are `false`.
+Choose a version on the official release pages and read its changelog; do not use third-party mirrors. The currently available asset is the v0.1.0 Windows x64 portable ZIP (unsigned, `not-verified`); native installers for the four targets and the update gateway have not been produced yet. `SHA256SUMS` inside the ZIP detects download corruption only — it is not a digital signature.
 
-## Design goals and measured boundaries
+## Installation and use
 
-- **Very small footprint**: Rust + Slint software renderer, no WebView, no GPU runtime, no database engine. A single encrypted file plus an in-memory index after unlock.
-- **Zero network on the vault path**: `pass-crypto` / `pass-store` / `pass-service` do not link the HTTP stack, never read credentials outside the vault, and send no telemetry or vault identifier. The updater is a separate compilation unit, isolated from the ciphertext path.
-- **One encrypted file**: the whole vault lives in `pass.mpv1`; backups are copies of the same encrypted file.
-- **Lock down quickly**: idle / session-lock auto-lock, clipboard auto-clear, no plaintext in UI list models.
-- Resource figures are published only from controlled measurements (see the private source repo's acceptance notes). Unlocking intentionally consumes 64 MiB+ for a fraction of a second — that is Argon2id brute-force resistance, not a defect, and is reported separately from idle-state memory. No claim of "zero CPU" is made. **Idle-state memory has not been measured yet.**
+- Windows: run the `.exe` or `.msi` and install for the current user; upgrades keep the original install format.
+- Linux: make the AppImage executable and run it, or install the DEB / RPM through your package manager.
+- macOS: open the DMG and copy the app to Applications, or extract the app archive.
+- On first run, create a local vault and set a master password; unlock it on every later start. The vault path is fully offline, with only an in-memory index after unlock.
 
-## Open vault format — independently verifiable
+There is no master password recovery, reset or hint. If you forget it, the vault cannot be recovered — back up the encrypted file yourself. Encrypted backup and restore are available in the app; writes are atomic and rotate the previous `pass.mpv1.bak`.
 
-The source code is **private**, so the format is published as a standalone specification plus public test vectors:
-
-- [MPV1 vault format specification (Chinese)](docs/MPV1-密文格式规范.md) — byte layout, Argon2id parameters, XChaCha20-Poly1305 usage, canonical JSON schema, verification steps and error conditions.
-- [Public MPV1 test vectors](docs/MPV1-测试向量/README.md) — a fixed, fake-data vault, its test master password, a wrong password, nine tampered / truncated / appended samples and a machine-readable `manifest.json`.
-- `madis-pass-probe` — a separately built CLI that parses the 88-byte header through an independent code path and verifies the Poly1305 tag. It is shipped with the Windows portable build. `self-test` replays every vector.
-
-Format: Argon2id v1.3 (`m=64 MiB`, `t=3`, `p=4`) → HKDF-SHA256 → XChaCha20-Poly1305 with the 88-byte header as AAD. Test vectors and self-tests are **regression checks, not a security audit**.
-
-## Security boundaries (read this)
-
-- The source code of the application is **private**. What is public is the format specification, test vectors, the verification tool and the threat model below. The product has **not** been audited by a third party.
-- **No master password recovery, reset or hint.** If you forget it, the vault cannot be recovered. Back up the encrypted file.
-- Not defended against: local administrators or same-user malware, keyloggers, screenshots / screen recording, clipboard managers or clipboard history, remote desktop sessions, OS page files / hibernation files / crash dumps, cold-boot attacks, filesystem snapshots, cloud-sync history, old encrypted backups made before a password change, hardware debugging or side-channel attacks.
-- Clipboard auto-clear (default 15 s) only clears the value if it is still the one this app wrote; it cannot remove copies held by other software.
-- Plaintext CSV export is not implemented; if added later it will not be encrypted and must be deleted securely after use.
-- Automatic updates only accept signed packages from a compile-time fixed endpoint and trust root; even so, they do not protect against supply-chain compromise, local malware or a leaked signing key.
-- No claim of "zero CPU", "unbreakable", "secure" or "audited" is made.
-
-## Data locations
+### Data locations and backups
 
 | Platform | Data directory |
 | --- | --- |
 | Windows | `%LOCALAPPDATA%\Madis\Pass\Data` |
 | macOS | `~/Library/Application Support/Madis/Pass/Data` |
-| Linux | `$XDG_DATA_HOME/Madis/Pass/Data`, or `~/.local/share/Madis/Pass/Data` |
+| Linux | absolute `$XDG_DATA_HOME/Madis/Pass/Data`, otherwise `~/.local/share/Madis/Pass/Data` |
 
-The directory contains only MPV1 ciphertext (`pass.mpv1`, previous version `pass.mpv1.bak`) and non-secret `state.json` / `ui.json`. **No plaintext vault file is written to disk.**
+The directory holds only MPV1 ciphertext (`pass.mpv1` plus its previous-version backup) and non-secret `state.json` / `ui.json`. No plaintext vault file is written to disk. Uninstalling keeps the data directory, settings and backups by default and never recursively deletes the shared Madis parent directory. Updating replaces program files only and never modifies or deletes user data. Save a backup of the current data before restoring.
 
-Portable mode uses `Data/` beside the executable — do not place it in a cloud-synced or shared folder. `--data-file <path>` selects a standalone vault file; it is rejected when combined with portable mode. Updating replaces program files only and **never modifies or deletes the user data directory**.
+### Portable use (Windows / Linux only)
 
-## Four-target delivery and downloads
+Create `portable.json` beside the executable with exactly `{"version":1}`, or start with `--portable`. The app never creates this file itself; an invalid or unreadable marker produces an error instead of silently falling back to the user directory. macOS explicitly rejects portable mode to avoid writing inside a signed `.app` bundle.
 
-The target matrix is Windows x64 / Linux x64 / macOS Intel / macOS ARM with nine package formats (NSIS, MSI, AppImage, deb, rpm, dmg, app.tar.gz). Currently **only the Windows x64 portable ZIP is built and verified locally**; native installers and build-repo CI are templates / unverified. The first official Release (v0.1.0) ships this Windows x64 portable ZIP. See [Four-platform delivery notes (Chinese)](docs/四平台交付说明.md).
+- The data root is `Data` beside the actual executable; quit the app before moving the program and its complete `Data` together.
+- Choose a writable directory — not a cloud-synced or shared folder.
+- `--data-file <path>` selects a standalone vault file; combining it with portable mode is explicitly rejected.
+- Portable mode can still open the official download pages but never invokes an installing updater; keep the complete `Data` when updating manually.
 
-The first official Release is **v0.1.0** — a Windows x64 portable ZIP (unsigned, `not-verified`). Use only the official GitHub / Gitee release pages of this repository; do not use third-party mirrors. `SHA256SUMS` (inside the ZIP) detects download corruption only — it is not a signature.
+## Installation security and privacy
 
-A Windows x64 portable ZIP is produced from the private source repo's `release/windows/构建便携包.ps1`; it contains the executable, both README files, the license text, the format specification, the probe tool and `SHA256SUMS.txt`. This portable ZIP is also the official v0.1.0 release asset; it is **not signed** (`not-verified`).
+Back up your data before installing or upgrading. Packages without a native code signature or Apple notarization may be blocked by Windows SmartScreen or macOS Gatekeeper; do not disable global system security policies — obtain and verify files from the official release pages.
 
-## Gitee mirror
+- `SHA256SUMS` detects corruption only and is not a digital signature; Minisign update signatures do not replace native platform signing or Apple notarization.
+- Vault and entry contents stay local. No account, no cloud sync, no vault content uploaded. Checking for updates and downloading packages requires network access, but only to a fixed endpoint.
+- The app does not defend against local administrators, same-user malware, keyloggers, screenshots, clipboard history, OS page files or crash dumps; the product has not been audited by a third party.
+- Clipboard auto-clear (15 s by default) only clears the value if the app still owns it; it cannot remove copies held by other software.
+- Idle or session lock locks the vault automatically, as does quitting the app. Copied passwords are cleared from the clipboard and plaintext never enters UI list models.
 
-This public product repository is also mirrored on Gitee: [gitee.com/madis/madis-pass](https://gitee.com/madis/madis-pass). It is kept in sync with GitHub by this repository's own GitHub Actions workflow (daily, Beijing 03:07, fast-forward only); use only the official GitHub / Gitee release pages, never third-party mirrors.
+## Version checks and the old-version grace period
 
-The source repository `madis-pass-source` and build repository `madis-pass-build` are permanently private and are not published here; their Gitee mirroring policy lives in their own repository constraints (source mirrors daily from GitHub via its own Actions workflow; build does not mirror source).
+`release.config.json` and `version-policy-v2.json` describe the **target stable-release contract**: a fixed HTTPS endpoint, Minisign verification, downgrade rejection, size and SHA-256 checks, a background check, install-on-quit with automatic restart, a one-calendar-UTC-month deadline for old versions and a 14-day offline grace period.
 
-## Licensing and attribution
+**The automatic update service is not enabled at present.** The compile-time trust root is empty, `enabled()` returns `false`, the app makes no network requests on startup, and the UI clearly asks you to update manually from the download pages. It becomes live only after the trust root, offline signing process, endpoint deployment and a real-device upgrade loop are all in place. This repository contains no private keys and no fabricated public keys or package hashes.
 
-Madis Pass binaries are proprietary freeware distributed under [LICENSE.txt](LICENSE.txt); the source code is not published. Built with [Slint](https://slint.dev) under the Royalty-Free License 2.0 — **Made with Slint**. Third-party dependency licenses (RustCrypto, etc., under MIT / Apache-2.0) are summarised in the release notes; Slint's license does not license the whole product.
+The executable is consistently named `madis-pass`; the identifier, install directory, vault and backup paths do not change. The design drew on `pass` / `pash`, SpicyPass, KeePass and the RustCrypto crates; their audits and certifications are not claims about this product.
 
-Third-party projects that informed this design include `pass` / `pash`, `SpicyPass`, KeePass / KeePassXC, `ripasso` and the RustCrypto crates. Their audits and certifications are **not** claims about this product.
+Madis Pass binaries are proprietary freeware; the source code is not published. The UI is built with [Slint](https://slint.dev) under the Royalty-Free License 2.0 — **Made with Slint**.

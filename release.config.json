@@ -7,10 +7,16 @@
   "binary": "madis-pass",
   "packagePrefix": "madis-pass",
   "release": {
-    "state": "implemented-not-published",
+    "state": "approved-for-stable-publication",
     "version": "0.1.0",
     "latestPublished": false,
     "endToEndVerified": false
+  },
+  "repositories": {
+    "gitee": {
+      "sourceVisibility": "private",
+      "distributionVisibility": "public"
+    }
   },
   "targets": [
     {
@@ -101,7 +107,7 @@
     "state": "not-verified"
   },
   "updates": {
-    "state": "client-implemented-trust-root-not-configured",
+    "state": "client-implemented-service-disabled",
     "signatureAlgorithm": "minisign",
     "trustedPublicKey": "",
     "signedBinding": [
@@ -125,14 +131,20 @@
     ],
     "requireExitBeforeInstall": true,
     "rejectUntrustedDowngrade": true,
-    "enabled": false,
-    "automaticInstall": false,
+    "enabled": true,
+    "automaticInstall": true,
+    "restartAfterInstall": true,
+    "packageBaseUrl": "https://github.com/MadisTop/madis-pass/releases/latest/download/",
     "metadataEndpoint": "https://raw.githubusercontent.com/MadisTop/madis-pass/main/update-metadata.json",
     "metadataSchemaVersion": 2
   },
   "versionPolicy": {
-    "enabled": false,
+    "enabled": true,
     "schemaVersion": 2,
-    "offlineGraceDays": 14
+    "offlineGraceDays": 14,
+    "oldVersionDeadline": "one-calendar-month",
+    "initialCheckSeconds": 15,
+    "requireIdle": true,
+    "signatureMode": "minisign-legacy-ed"
   }
 }
