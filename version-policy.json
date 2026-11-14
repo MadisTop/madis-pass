@@ -2,12 +2,12 @@
   "schemaVersion": 1,
   "productId": "madis-pass",
   "sequence": 1,
-  "generatedAt": "2026-11-12T00:00:00Z",
+  "generatedAt": "2026-11-13T08:40:54Z",
   "latestVersion": "0.1.0",
   "offlineGraceDays": 14,
   "releases": {
     "0.1.0": {
-      "releasedAt": "2026-11-12T00:00:00Z"
+      "releasedAt": "2026-11-13T08:40:54Z"
     }
   }
 }

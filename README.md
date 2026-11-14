@@ -4,7 +4,7 @@ English | [简体中文](README.zh-CN.md)
 
 Madis Pass: a lightweight offline password manager built with Rust and Slint. It encrypts a single-file local vault with Argon2id and XChaCha20-Poly1305 (MPV1), and supports idle auto-lock and multi-platform desktop clients.
 
-Publisher **Madis** · identifier **`top.madis.pass`** · binary **`madis-pass`** · version **0.1.0**.
+Publisher **Madis** · identifier **`top.madis.pass`** · binary **`madis-pass`** · version **0.1.1**.
 
 ## Supported platforms
 
@@ -22,7 +22,7 @@ Linux graphical sessions use X11 or XWayland. Pick the package matching your OS 
 - [GitHub releases](https://github.com/MadisTop/madis-pass/releases)
 - [Gitee releases](https://gitee.com/madis/madis-pass/releases)
 
-Choose a version on the official release pages and read its changelog; do not use third-party mirrors. The currently available asset is the v0.1.0 Windows x64 portable ZIP (unsigned, `not-verified`); native installers for the four targets and the update gateway have not been produced yet. `SHA256SUMS` inside the ZIP detects download corruption only — it is not a digital signature.
+Choose a version on the official release pages and read its changelog; do not use third-party mirrors. Starting with v0.1.1, the release page lists native installers for all four targets together with `SHA256SUMS` and Minisign signatures for every package; until the stable publication completes, no preview asset counts as a formal installer. `SHA256SUMS` detects download corruption only — it is not a digital signature.
 
 ## Installation and use
 
@@ -66,7 +66,7 @@ Back up your data before installing or upgrading. Packages without a native code
 
 `release.config.json` and `version-policy-v2.json` describe the **target stable-release contract**: a fixed HTTPS endpoint, Minisign verification, downgrade rejection, size and SHA-256 checks, a background check, install-on-quit with automatic restart, a one-calendar-UTC-month deadline for old versions and a 14-day offline grace period.
 
-**The automatic update service is not enabled at present.** The compile-time trust root is empty, `enabled()` returns `false`, the app makes no network requests on startup, and the UI clearly asks you to update manually from the download pages. It becomes live only after the trust root, offline signing process, endpoint deployment and a real-device upgrade loop are all in place. This repository contains no private keys and no fabricated public keys or package hashes.
+Starting with v0.1.1 the client embeds a project-specific Minisign trust root at compile time; `enabled()` returns `true` and the app checks the fixed endpoint in the background. The published update metadata still carries an empty `packages` list until the stable publication completes, so a check yields no installable package. **The real-device upgrade loop, native code signing and Apple notarization remain unverified**; prefer manual updates from the download pages until then. This repository contains no private keys; `SHA256SUMS` is not a digital signature and no package hashes are fabricated.
 
 The executable is consistently named `madis-pass`; the identifier, install directory, vault and backup paths do not change. The design drew on `pass` / `pash`, SpicyPass, KeePass and the RustCrypto crates; their audits and certifications are not claims about this product.
 

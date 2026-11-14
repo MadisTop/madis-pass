@@ -8,7 +8,7 @@
   "packagePrefix": "madis-pass",
   "release": {
     "state": "approved-for-stable-publication",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "latestPublished": false,
     "endToEndVerified": false
   },
@@ -109,7 +109,7 @@
   "updates": {
     "state": "client-implemented-service-disabled",
     "signatureAlgorithm": "minisign",
-    "trustedPublicKey": "",
+    "trustedPublicKey": "RWSDMMc61eTwVyDYXl0NXddmzuq8CLOoc1sXySYP6xmWiSvfewv+X31N",
     "signedBinding": [
       "identifier",
       "version",

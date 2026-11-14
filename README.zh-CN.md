@@ -4,7 +4,7 @@
 
 Madis Pass：基于 Rust 与 Slint 的轻量离线密码管理器，采用 Argon2id 与 XChaCha20-Poly1305（MPV1）端到端加密单文件本地密文库，支持空闲自动锁定与多平台桌面客户端。
 
-发布者 **Madis**；应用标识 **`top.madis.pass`**；正式二进制 **`madis-pass`**；版本 **0.1.0**。
+发布者 **Madis**；应用标识 **`top.madis.pass`**；正式二进制 **`madis-pass`**；版本 **0.1.1**。
 
 ## 支持平台
 
@@ -22,7 +22,7 @@ Linux 图形会话使用 X11 或 XWayland。请选择与操作系统及处理器
 - [GitHub 发布页面](https://github.com/MadisTop/madis-pass/releases)
 - [Gitee 发布页面](https://gitee.com/madis/madis-pass/releases)
 
-从官方发布页面选择版本并阅读该版本的变更说明，不使用来源不明的转载包。当前可获取的是 v0.1.0 Windows x64 便携 ZIP（未签名，`not-verified`）；四目标原生安装包与自动更新网关尚未产出。ZIP 内的 `SHA256SUMS` 仅用于检测下载损坏，**不是数字签名**。
+从官方发布页面选择版本并阅读该版本的变更说明，不使用来源不明的转载包。v0.1.1 起以 Release 页面列出的四目标原生安装包、逐包 `SHA256SUMS` 与 Minisign 签名为准；正式发布完成前，任何预览资产都不视为正式安装包。`SHA256SUMS` 仅用于检测下载损坏，**不是数字签名**。
 
 ## 安装与使用
 
@@ -66,7 +66,7 @@ Linux 图形会话使用 X11 或 XWayland。请选择与操作系统及处理器
 
 `release.config.json` 与 `version-policy-v2.json` 描述的是**正式发行目标契约**：固定 HTTPS 端点、Minisign 验签、拒绝降级、包大小与 SHA-256 校验、后台检查、下载完成后退出安装并自动重启、旧版按一个 UTC 自然月截止并另有 14 天离线宽限。
 
-**当前自动更新服务尚未启用**：编译期信任根为空，`enabled()` 返回 `false`，程序启动后不会发起任何网络请求，界面明确提示从下载页面手动更新。只有完成信任根生成、离线签名流程、端点部署与实机升级闭环后才会启用。本仓库不含任何私钥或伪造的公钥 / 包摘要。
+v0.1.1 起客户端已内嵌本项目独立生成的 Minisign 编译期信任根，`enabled()` 返回 `true`，会按固定端点在后台检查更新；但公开更新元数据的 `packages` 在正式发布完成前为空，检查不会获得可用安装包。**实机升级闭环、原生代码签名与 Apple 公证仍待验收**，在此之前请优先从下载页面手动更新。本仓库不含任何私钥，`SHA256SUMS` **不是数字签名**，也不含伪造的包摘要。
 
 程序命名统一为 `madis-pass`，应用标识、安装目录、密文库及备份路径不变。设计参考了 `pass` / `pash`、SpicyPass、KeePass 与 RustCrypto 等项目，这些项目的审计结论不构成对本产品的任何声称。
 
