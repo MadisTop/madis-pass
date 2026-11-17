@@ -1,9 +1,9 @@
 {
   "schemaVersion": 2,
   "productId": "madis-pass",
-  "sequence": 8,
-  "generatedAt": "2026-11-17T02:08:07Z",
-  "latestVersion": "0.1.8",
+  "sequence": 9,
+  "generatedAt": "2026-11-17T09:03:24Z",
+  "latestVersion": "0.1.9",
   "offlineGraceDays": 14,
   "releases": {
     "0.1.0": {
@@ -43,7 +43,12 @@
     },
     "0.1.8": {
       "releasedAt": "2026-11-17T02:08:07Z",
-      "expiresAt": "2027-11-17T02:08:07Z"
+      "expiresAt": "2026-12-17T09:03:24Z",
+      "supersededAt": "2026-11-17T09:03:24Z"
+    },
+    "0.1.9": {
+      "releasedAt": "2026-11-17T09:03:24Z",
+      "expiresAt": "2027-11-17T09:03:24Z"
     }
   }
 }
