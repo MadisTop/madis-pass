@@ -4,7 +4,7 @@
 
 Madis Pass：基于 Rust 与 Slint 的轻量离线密码管理器，采用 Argon2id 与 XChaCha20-Poly1305（MPV1）端到端加密单文件本地密文库，支持空闲自动锁定与多平台桌面客户端。
 
-发布者 **Madis**；应用标识 **`top.madis.pass`**；正式二进制 **`madis-pass`**；版本 **0.1.9**。
+发布者 **Madis**；应用标识 **`top.madis.pass`**；正式二进制 **`madis-pass`**；版本 **0.1.10**。
 
 ## 支持平台
 
