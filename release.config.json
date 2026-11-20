@@ -8,7 +8,7 @@
   "packagePrefix": "madis-pass",
   "release": {
     "state": "approved-for-stable-publication",
-    "version": "0.1.10",
+    "version": "0.1.11",
     "latestPublished": false,
     "endToEndVerified": false
   },

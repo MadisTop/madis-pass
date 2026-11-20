@@ -4,7 +4,7 @@ English | [简体中文](README.zh-CN.md)
 
 Madis Pass: a lightweight offline password manager built with Rust and Slint. It encrypts a single-file local vault with Argon2id and XChaCha20-Poly1305 (MPV1), and supports idle auto-lock and multi-platform desktop clients.
 
-Publisher **Madis** · identifier **`top.madis.pass`** · binary **`madis-pass`** · version **0.1.10**.
+Publisher **Madis** · identifier **`top.madis.pass`** · binary **`madis-pass`** · version **0.1.11**.
 
 ## Supported platforms
 
